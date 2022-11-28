@@ -19,8 +19,7 @@ class SelectedPhotoViewController: UIViewController {
     }
     
     private func configure() {
-        view.backgroundColor = .black
-        navigationController?.navigationBar.backgroundColor = .black
+        
     }
     
     private func addSubviwes() {

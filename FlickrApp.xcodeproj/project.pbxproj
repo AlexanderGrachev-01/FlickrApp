@@ -15,6 +15,7 @@
 		F6B3E8AF2934E22E003B0BC5 /* NavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B3E8AE2934E22E003B0BC5 /* NavController.swift */; };
 		F6B3E8B42934EACF003B0BC5 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B3E8B32934EACF003B0BC5 /* PhotoCollectionViewCell.swift */; };
 		F6B3E8B62935027F003B0BC5 /* SelectedPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B3E8B52935027F003B0BC5 /* SelectedPhotoViewController.swift */; };
+		F6B3E8BA293551F4003B0BC5 /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B3E8B9293551F4003B0BC5 /* PhotoTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		F6B3E8AE2934E22E003B0BC5 /* NavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavController.swift; sourceTree = "<group>"; };
 		F6B3E8B32934EACF003B0BC5 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		F6B3E8B52935027F003B0BC5 /* SelectedPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPhotoViewController.swift; sourceTree = "<group>"; };
+		F6B3E8B9293551F4003B0BC5 /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				F6B3E8B32934EACF003B0BC5 /* PhotoCollectionViewCell.swift */,
+				F6B3E8B9293551F4003B0BC5 /* PhotoTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6B3E8BA293551F4003B0BC5 /* PhotoTableViewCell.swift in Sources */,
 				F6B3E8B62935027F003B0BC5 /* SelectedPhotoViewController.swift in Sources */,
 				F6B3E89C2934DF42003B0BC5 /* MainViewController.swift in Sources */,
 				F6B3E8B42934EACF003B0BC5 /* PhotoCollectionViewCell.swift in Sources */,

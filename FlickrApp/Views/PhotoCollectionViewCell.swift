@@ -9,9 +9,9 @@ import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "PhotoCell"
+    static let identifier = "PhotoCollectionCell"
     
-    let imageView = UIImageView()
+    private let imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,11 +22,11 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:)")
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func configure() {
-        layer.borderWidth = 2
+        
     }
     
     private func setConstraints() {
