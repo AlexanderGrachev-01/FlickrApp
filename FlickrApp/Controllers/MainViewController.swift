@@ -13,12 +13,6 @@ class MainViewController: UIViewController {
     
     var photos: [Photo] = []
     
-    private let segmentController: UISegmentedControl = {
-        let view = UISegmentedControl()
-        
-        return view
-    }()
-    
     private let photoList: UITableView = {
         let view = UITableView(frame: .zero)
         view.showsVerticalScrollIndicator = false
@@ -47,7 +41,16 @@ class MainViewController: UIViewController {
         return view
     }()
     
+    private let displayingButton: UIButton = {
+        let view = UIButton()
+        view.setImage(UIImage(systemName: "list.dash"), for: .normal)
+        
+        return view
+    }()
+    
     private var sortUp = true
+    
+    private var isList = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,14 +69,16 @@ class MainViewController: UIViewController {
         title = "Flickr"
         view.backgroundColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: displayingButton)
         
         sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        
+        displayingButton.addTarget(self, action: #selector(displayingButtonTapped), for: .touchUpInside)
         
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         
-        segmentController.isHidden = true
-        
+        photoList.isHidden = false
         photoList.backgroundColor = .white
         photoList.dataSource = self
         photoList.delegate = self
@@ -82,11 +87,10 @@ class MainViewController: UIViewController {
         photoCollection.backgroundColor = .white
         photoCollection.dataSource = self
         photoCollection.delegate = self
-    }
+}
     
     private func addSubviews() {
         view.addSubview(searchBar)
-        view.addSubview(segmentController)
         view.addSubview(photoList)
         view.addSubview(photoCollection)
     }
@@ -110,6 +114,20 @@ class MainViewController: UIViewController {
             sortUp = true
         }
     }
+    
+    @objc func displayingButtonTapped() {
+        if isList {
+            displayingButton.setImage(UIImage(systemName: "square.grid.3x3"), for: .normal)
+            photoList.isHidden = true
+            photoCollection.isHidden = false
+            isList = false
+        } else {
+            displayingButton.setImage(UIImage(systemName: "list.dash"), for: .normal)
+            photoList.isHidden = false
+            photoCollection.isHidden = true
+            isList = true
+        }
+    }
 }
 
 extension MainViewController {
@@ -119,8 +137,6 @@ extension MainViewController {
         photoList.translatesAutoresizingMaskIntoConstraints = false
         photoCollection.translatesAutoresizingMaskIntoConstraints = false
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        segmentController.translatesAutoresizingMaskIntoConstraints = false
-        
         
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -137,11 +153,6 @@ extension MainViewController {
             photoCollection.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             photoCollection.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             photoCollection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            segmentController.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            segmentController.heightAnchor.constraint(equalToConstant: 20),
-            segmentController.widthAnchor.constraint(equalToConstant: 60),
-            segmentController.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
 }

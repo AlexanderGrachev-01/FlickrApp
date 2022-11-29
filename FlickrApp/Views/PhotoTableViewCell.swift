@@ -46,7 +46,9 @@ class PhotoTableViewCell: UITableViewCell {
         self.name.font = .systemFont(ofSize: 22)
         self.name.text = name
         self.date.font = .systemFont(ofSize: 14)
-        self.date.text = date
+        var dayOnly = date
+        dayOnly.removeLast(15)
+        self.date.text = dayOnly
         self.tags.font = .systemFont(ofSize: 18)
         self.tags.numberOfLines = 5
         self.tags.text = tags

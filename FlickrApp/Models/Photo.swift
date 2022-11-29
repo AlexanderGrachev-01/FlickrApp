@@ -24,7 +24,6 @@ class Photo {
         self.imageURL = imageURL
         self.name = name
         self.date = date
-        self.date.removeLast(15)
         self.tags = tags
     }
 }
