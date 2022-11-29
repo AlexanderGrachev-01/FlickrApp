@@ -11,6 +11,8 @@ class MainViewController: UIViewController {
 
     private let searchBar = UISearchBar()
     
+    var photos: [Photo] = []
+    
     private let segmentController: UISegmentedControl = {
         let view = UISegmentedControl()
         
@@ -44,6 +46,11 @@ class MainViewController: UIViewController {
         configure()
         addSubviews()
         setConstraints()
+        PhotoDownloader().loadPhotos(completion: { photos in
+            self.photos = photos ?? []
+            self.photoCollection.reloadData()
+            self.photoList.reloadData()
+        })
     }
 
     private func configure() {
@@ -111,12 +118,12 @@ extension MainViewController {
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = photoList.dequeueReusableCell(withIdentifier: PhotoTableViewCell.identifier, for: indexPath) as! PhotoTableViewCell
-        cell.configure(name: "Name", date: "25.09.2022", tags: "#fkmkdsn #kdsnk #kmd #fkmkdsn #kdsnk #kmd #fkmkdsn #kdsnk #kmd #fkmkdsn #kdsnk #kmd")
+        cell.configure(imageURL: photos[indexPath.row].imageURL, name: photos[indexPath.row].name, date: photos[indexPath.row].date, tags: photos[indexPath.row].tags)
         
         return cell
     }

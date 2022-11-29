@@ -28,7 +28,15 @@ class PhotoTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(name: String, date: String, tags: String) {
+    func configure(imageURL: String, name: String, date: String, tags: String) {
+        if let url = URL(string: imageURL) {
+            DispatchQueue.global(qos: .utility).async {
+                let image = (try? Data(contentsOf: url))
+                DispatchQueue.main.async {
+                    self.photoImageView.image = UIImage(data: image!)
+                }
+            }
+        }
         self.name.font = .systemFont(ofSize: 24)
         self.name.text = name
         self.date.font = .systemFont(ofSize: 14)
@@ -36,7 +44,6 @@ class PhotoTableViewCell: UITableViewCell {
         self.tags.font = .systemFont(ofSize: 18)
         self.tags.numberOfLines = 5
         self.tags.text = tags
-        self.photoImageView.image = UIImage(systemName: "house")
     }
     
     override func prepareForReuse() {
