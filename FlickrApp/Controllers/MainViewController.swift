@@ -40,6 +40,15 @@ class MainViewController: UIViewController {
         return view
     }()
     
+    private let sortButton: UIButton = {
+        let view = UIButton()
+        view.setImage(UIImage(systemName: "arrow.down"), for: .normal)
+        
+        return view
+    }()
+    
+    private var sortUp = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,6 +65,9 @@ class MainViewController: UIViewController {
     private func configure() {
         title = "Flickr"
         view.backgroundColor = .white
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
+        
+        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         
         searchBar.placeholder = "Search"
         searchBar.delegate = self
@@ -78,8 +90,27 @@ class MainViewController: UIViewController {
         view.addSubview(photoList)
         view.addSubview(photoCollection)
     }
+    
+    @objc func sortButtonTapped() {
+        if sortUp {
+            sortButton.setImage(UIImage(systemName: "arrow.down"), for: .normal)
+            photos.sort { (lhs: Photo, rhs: Photo) -> Bool in
+                return lhs.date > rhs.date
+            }
+            photoList.reloadData()
+            photoCollection.reloadData()
+            sortUp = false
+        } else {
+            sortButton.setImage(UIImage(systemName: "arrow.up"), for: .normal)
+            photos.sort { (lhs: Photo, rhs: Photo) -> Bool in
+                return lhs.date < rhs.date
+            }
+            photoList.reloadData()
+            photoCollection.reloadData()
+            sortUp = true
+        }
+    }
 }
-
 
 extension MainViewController {
     
