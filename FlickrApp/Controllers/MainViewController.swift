@@ -58,6 +58,7 @@ class MainViewController: UIViewController {
         view.backgroundColor = .white
         
         searchBar.placeholder = "Search"
+        searchBar.delegate = self
         
         segmentController.isHidden = true
         
@@ -123,7 +124,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = photoList.dequeueReusableCell(withIdentifier: PhotoTableViewCell.identifier, for: indexPath) as! PhotoTableViewCell
-        cell.configure(imageURL: photos[indexPath.row].imageURL, name: photos[indexPath.row].name, date: photos[indexPath.row].date, tags: photos[indexPath.row].tags)
+        cell.setInfo(imageURL: photos[indexPath.row].imageURL, name: photos[indexPath.row].name, date: photos[indexPath.row].date, tags: photos[indexPath.row].tags)
         
         return cell
     }
@@ -134,7 +135,9 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         photoList.deselectRow(at: indexPath, animated: true)
-        navigationController?.pushViewController(SelectedPhotoViewController(), animated: true)
+        let vc = SelectedPhotoViewController()
+        vc.setImageURL(imageURL: photos[indexPath.row].imageURL)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -142,18 +145,21 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = photoCollection.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath)
+        let cell = photoCollection.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
+        cell.setImageURL(imageURL: photos[indexPath.row].imageURL)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         photoCollection.deselectItem(at: indexPath, animated: true)
-        navigationController?.pushViewController(SelectedPhotoViewController(), animated: true)
+        let vc = SelectedPhotoViewController()
+        vc.setImageURL(imageURL: photos[indexPath.row].imageURL)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -170,5 +176,16 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         0
+    }
+}
+
+extension MainViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        PhotoDownloader().loadPhotos(tags: searchBar.text, completion: { photos in
+            self.photos = photos ?? []
+            self.photoCollection.reloadData()
+            self.photoList.reloadData()
+        })
     }
 }

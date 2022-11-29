@@ -14,14 +14,16 @@ class PhotoDownloader {
     let url = "https://www.flickr.com/services/feeds/photos_public.gne?format=json"
 //    let url = "https://rickandmortyapi.com/api/character"
     
-    let headers: HTTPHeaders = [
-        "Host": "www.flickr.com"
+    var parametrs = [
+        "tags": ""
     ]
 
     
     func loadPhotos(tags: String? = nil, completion: (([Photo]?) -> Void)? = nil) {
-    
-        AF.request(url, headers: headers).response { (response) -> Void in
+        
+        if let tags = tags { parametrs["tags"] = tags }
+        
+        AF.request(url, parameters: parametrs).response { (response) -> Void in
             switch response.result {
             case .success(_):
                 guard let data = response.data,

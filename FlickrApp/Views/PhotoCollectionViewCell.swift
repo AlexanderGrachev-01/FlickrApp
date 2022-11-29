@@ -26,7 +26,19 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     private func configure() {
-        
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+    }
+    
+    func setImageURL(imageURL: String) {
+        if let url = URL(string: imageURL) {
+            DispatchQueue.global(qos: .utility).async {
+                let image = (try? Data(contentsOf: url))
+                DispatchQueue.main.async {
+                    self.imageView.image = UIImage(data: image!)
+                }
+            }
+        }
     }
     
     private func setConstraints() {

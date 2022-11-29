@@ -21,14 +21,20 @@ class PhotoTableViewCell: UITableViewCell {
         
         addSubviews()
         setConstraints()
-        //configure()
+        configure()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(imageURL: String, name: String, date: String, tags: String) {
+    private func configure() {
+        photoImageView.contentMode = .scaleAspectFill
+        photoImageView.clipsToBounds = true
+        
+    }
+    
+    func setInfo(imageURL: String, name: String, date: String, tags: String) {
         if let url = URL(string: imageURL) {
             DispatchQueue.global(qos: .utility).async {
                 let image = (try? Data(contentsOf: url))
