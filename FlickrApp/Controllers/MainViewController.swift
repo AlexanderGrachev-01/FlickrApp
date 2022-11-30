@@ -82,11 +82,13 @@ class MainViewController: UIViewController {
         photoList.backgroundColor = .white
         photoList.dataSource = self
         photoList.delegate = self
+        photoList.keyboardDismissMode = .onDrag
         
         photoCollection.isHidden = true
         photoCollection.backgroundColor = .white
         photoCollection.dataSource = self
         photoCollection.delegate = self
+        photoCollection.keyboardDismissMode = .onDrag
 }
     
     private func addSubviews() {
